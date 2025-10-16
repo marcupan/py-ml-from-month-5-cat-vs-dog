@@ -16,6 +16,7 @@ from train import train_model
 from evaluate import evaluate_model
 from utils import load_model, predict_image, visualize_prediction
 
+
 def parse_args():
     """Parse command line arguments."""
     parser = argparse.ArgumentParser(description='Cat vs. Dog Image Classifier')
@@ -30,6 +31,7 @@ def parse_args():
     parser.add_argument('--image_path', type=str, default=None,
                         help='Path to image for prediction')
     return parser.parse_args()
+
 
 def train(args):
     """Train the model."""
@@ -59,7 +61,7 @@ def train(args):
         optimizer, mode='min', factor=0.1, patience=3
     )
 
-    # Create directory for saving models if it doesn't exist
+    # Create a directory for saving models if it doesn't exist
     os.makedirs(os.path.dirname(args.model_path), exist_ok=True)
 
     # Train model
@@ -76,6 +78,7 @@ def train(args):
     )
 
     print('Training completed successfully!')
+
 
 def evaluate(args):
     """Evaluate the model."""
@@ -102,7 +105,7 @@ def evaluate(args):
         print(f"Model not found at {args.model_path}. Please train the model first.")
         return
 
-    # Move model to device
+    # Move model to a device
     model = model.to(device)
 
     # Define loss function
@@ -118,6 +121,7 @@ def evaluate(args):
 
     print(f"Test accuracy: {test_acc:.4f}")
     print(f"Test loss: {test_loss:.4f}")
+
 
 def predict(args):
     """Make a prediction for a single image."""
@@ -145,7 +149,7 @@ def predict(args):
         print(f"Model not found at {args.model_path}. Please train the model first.")
         return
 
-    # Move model to device
+    # Move model to a device
     model = model.to(device)
 
     # Make prediction
@@ -161,6 +165,7 @@ def predict(args):
     # Visualize prediction
     visualize_prediction(args.image_path, predicted_class, confidence)
 
+
 def main():
     """Main function."""
     args = parse_args()
@@ -173,6 +178,7 @@ def main():
         predict(args)
     else:
         print(f"Invalid mode: {args.mode}")
+
 
 if __name__ == '__main__':
     main()
