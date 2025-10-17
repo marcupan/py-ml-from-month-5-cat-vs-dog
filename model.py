@@ -9,6 +9,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+
 class CatDogCNN(nn.Module):
     """
     Convolutional Neural Network for cat vs. dog classification.
@@ -106,6 +107,7 @@ class CatDogCNN(nn.Module):
 
         return x
 
+
 def get_model():
     """
     Create and return an instance of the CatDogCNN model.
@@ -114,6 +116,7 @@ def get_model():
         CatDogCNN: An instance of the CNN model
     """
     return CatDogCNN()
+
 
 if __name__ == "__main__":
     # Test the model with a random input
