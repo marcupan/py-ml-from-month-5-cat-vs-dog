@@ -16,13 +16,14 @@ from data_loader import get_data_loaders
 from model import get_model
 from utils import load_model, visualize_model_predictions
 
+
 def evaluate_model(model, test_loader, criterion, device='cpu'):
     """
     Evaluate the model on the test set.
 
     Args:
         model (nn.Module): The trained model
-        test_loader (DataLoader): DataLoader for test data
+        test_loader (DataLoader): DataLoader for a test data
         criterion (nn.Module): Loss function
         device (str): Device to run evaluation on ('cuda' or 'cpu')
 
@@ -32,7 +33,7 @@ def evaluate_model(model, test_loader, criterion, device='cpu'):
         np.ndarray: True labels
         np.ndarray: Predicted labels
     """
-    # Set model to evaluation mode
+    # Set the model to evaluation mode
     model.eval()
 
     # Initialize variables
@@ -69,6 +70,7 @@ def evaluate_model(model, test_loader, criterion, device='cpu'):
 
     return test_acc.item(), test_loss, np.array(all_labels), np.array(all_preds)
 
+
 def plot_confusion_matrix(true_labels, pred_labels, class_names=['Cat', 'Dog'], save_dir='./models'):
     """
     Plot confusion matrix.
@@ -96,9 +98,10 @@ def plot_confusion_matrix(true_labels, pred_labels, class_names=['Cat', 'Dog'], 
 
     print("Confusion matrix saved to", os.path.join(save_dir, 'confusion_matrix.png'))
 
+
 def print_classification_report(true_labels, pred_labels, class_names=['Cat', 'Dog']):
     """
-    Print classification report.
+    Print a classification report.
 
     Args:
         true_labels (np.ndarray): True labels
@@ -109,6 +112,7 @@ def print_classification_report(true_labels, pred_labels, class_names=['Cat', 'D
     report = classification_report(true_labels, pred_labels, target_names=class_names)
     print("\nClassification Report:")
     print(report)
+
 
 def main():
     """Main function to evaluate the model."""
@@ -163,6 +167,7 @@ def main():
     visualize_model_predictions(model, test_loader, device=device)
 
     print("\nEvaluation completed successfully!")
+
 
 if __name__ == '__main__':
     main()
