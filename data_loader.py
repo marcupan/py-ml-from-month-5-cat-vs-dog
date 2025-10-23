@@ -13,6 +13,7 @@ from torchvision import datasets, transforms
 from PIL import Image
 import matplotlib.pyplot as plt
 
+
 def get_data_loaders(data_dir='./data', batch_size=32, val_ratio=0.1, num_workers=4, show_sample=False):
     """
     Create data loaders for training, validation, and testing.
@@ -36,7 +37,7 @@ def get_data_loaders(data_dir='./data', batch_size=32, val_ratio=0.1, num_worker
     # Define transformations for training (with augmentation)
     train_transform = transforms.Compose([
         transforms.Resize((256, 256)),  # Resize images
-        transforms.RandomCrop(224),     # Random crop for augmentation
+        transforms.RandomCrop(224),  # Random crop for augmentation
         transforms.RandomHorizontalFlip(),  # Random horizontal flip
         transforms.RandomRotation(10),  # Random rotation
         transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2),  # Color jitter
@@ -51,10 +52,10 @@ def get_data_loaders(data_dir='./data', batch_size=32, val_ratio=0.1, num_worker
         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])  # Normalize
     ])
 
-    # Create dataset directory if it doesn't exist
+    # Create a dataset directory if it doesn't exist
     os.makedirs(data_dir, exist_ok=True)
 
-    # Load the dataset from the real cats-vs-dogs directory structure
+    # Load the dataset from the real cats-vs.-dogs directory structure
     cats_vs_dogs_path = os.path.join(data_dir, 'raw', 'cats-vs-dogs')
 
     if os.path.exists(cats_vs_dogs_path):
@@ -74,7 +75,7 @@ def get_data_loaders(data_dir='./data', batch_size=32, val_ratio=0.1, num_worker
             generator=torch.Generator().manual_seed(42)  # For reproducibility
         )
 
-        # Apply the correct transform to validation set
+        # Apply the correct transform to a validation set
         val_dataset.dataset.transform = eval_transform
 
         # Load test dataset
@@ -102,7 +103,7 @@ def get_data_loaders(data_dir='./data', batch_size=32, val_ratio=0.1, num_worker
             generator=torch.Generator().manual_seed(42)
         )
 
-        # Apply the correct transform to validation set
+        # Apply the correct transform to a validation set
         val_dataset.dataset.transform = eval_transform
 
         # Load CIFAR-10 test data
@@ -134,6 +135,7 @@ def get_data_loaders(data_dir='./data', batch_size=32, val_ratio=0.1, num_worker
     print(f"Dataset split: {train_size} training, {val_size} validation, {len(test_dataset)} test images")
     return train_loader, val_loader, test_loader
 
+
 def show_batch(batch, n=6):
     """
     Display a batch of images with their labels.
@@ -162,11 +164,14 @@ def show_batch(batch, n=6):
     plt.tight_layout()
     plt.show()
 
+
 if __name__ == "__main__":
     # Test the data loader
     import numpy as np
+
     train_loader, val_loader, test_loader = get_data_loaders(show_sample=True)
     print(f"Number of batches: {len(train_loader)} train, {len(val_loader)} val, {len(test_loader)} test")
 
     # Print class indices to verify correct loading
-    print(f"Class indices: {train_loader.dataset.dataset.class_to_idx if hasattr(train_loader.dataset, 'dataset') else train_loader.dataset.class_to_idx}")
+    print(
+        f"Class indices: {train_loader.dataset.dataset.class_to_idx if hasattr(train_loader.dataset, 'dataset') else train_loader.dataset.class_to_idx}")
