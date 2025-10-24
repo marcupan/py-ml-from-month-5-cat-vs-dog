@@ -1,7 +1,7 @@
 """
 Utility Functions for Cat vs. Dog Image Classifier
 
-This module contains helper functions for the project, such as:
+This module contains helper functions for the project, such as
 - Visualization utilities
 - Model loading and saving
 - Prediction utilities
@@ -15,6 +15,7 @@ import matplotlib.pyplot as plt
 from PIL import Image
 from torchvision import transforms
 
+
 def load_model(model, model_path, device=None):
     """
     Load a saved model checkpoint.
@@ -22,7 +23,7 @@ def load_model(model, model_path, device=None):
     Args:
         model (nn.Module): The model architecture
         model_path (str): Path to the saved model checkpoint
-        device (torch.device, optional): Device to load the model to. If None, uses current device.
+        device (torch.device, optional): Device to load the model to. If None, uses the current device.
 
     Returns:
         model (nn.Module): The model with loaded weights
@@ -54,6 +55,7 @@ def load_model(model, model_path, device=None):
 
     return model
 
+
 def predict_image(model, image_path, device='cpu'):
     """
     Make a prediction for a single image.
@@ -67,7 +69,7 @@ def predict_image(model, image_path, device='cpu'):
         int: Predicted class (0 for cat, 1 for dog)
         float: Probability of the prediction
     """
-    # Set model to evaluation mode
+    # Set the model to evaluation mode
     model.eval()
 
     # Load and preprocess the image
@@ -92,6 +94,7 @@ def predict_image(model, image_path, device='cpu'):
 
     return predicted_class, confidence
 
+
 def visualize_prediction(image_path, predicted_class, confidence, class_names=['Cat', 'Dog']):
     """
     Visualize an image with its prediction.
@@ -105,7 +108,7 @@ def visualize_prediction(image_path, predicted_class, confidence, class_names=['
     # Load image
     image = Image.open(image_path).convert('RGB')
 
-    # Create figure
+    # Create a figure
     plt.figure(figsize=(8, 8))
     plt.imshow(image)
 
@@ -118,8 +121,9 @@ def visualize_prediction(image_path, predicted_class, confidence, class_names=['
     plt.tight_layout()
     plt.show()
 
+
 def visualize_model_predictions(model, data_loader, class_names=['Cat', 'Dog'],
-                               num_images=6, device='cpu'):
+                                num_images=6, device='cpu'):
     """
     Visualize model predictions on a batch of images.
 
@@ -130,7 +134,7 @@ def visualize_model_predictions(model, data_loader, class_names=['Cat', 'Dog'],
         num_images (int): Number of images to visualize
         device (str): Device to run inference on ('cuda' or 'cpu')
     """
-    # Set model to evaluation mode
+    # Set the model to evaluation mode
     model.eval()
 
     # Get a batch of images
@@ -153,7 +157,7 @@ def visualize_model_predictions(model, data_loader, class_names=['Cat', 'Dog'],
     images = np.clip(images, 0, 1)
 
     # Plot images
-    fig, axes = plt.subplots(2, num_images//2, figsize=(15, 8))
+    fig, axes = plt.subplots(2, num_images // 2, figsize=(15, 8))
     axes = axes.flatten()
 
     for i in range(num_images):
@@ -161,7 +165,7 @@ def visualize_model_predictions(model, data_loader, class_names=['Cat', 'Dog'],
         axes[i].set_title(f"True: {class_names[labels[i]]}\nPred: {class_names[preds[i]]}")
         axes[i].axis('off')
 
-        # Add green/red border based on correct/incorrect prediction
+        # Add green/red border based on a correct / incorrect prediction
         if preds[i] == labels[i]:
             # Green border for correct prediction
             for spine in axes[i].spines.values():
@@ -176,6 +180,7 @@ def visualize_model_predictions(model, data_loader, class_names=['Cat', 'Dog'],
     plt.tight_layout()
     plt.show()
 
+
 def count_parameters(model):
     """
     Count the number of trainable parameters in a model.
@@ -187,6 +192,7 @@ def count_parameters(model):
         int: Number of trainable parameters
     """
     return sum(p.numel() for p in model.parameters() if p.requires_grad)
+
 
 def get_lr(optimizer):
     """
@@ -200,6 +206,7 @@ def get_lr(optimizer):
     """
     for param_group in optimizer.param_groups:
         return param_group['lr']
+
 
 if __name__ == "__main__":
     # Test the utility functions
