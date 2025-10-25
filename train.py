@@ -18,6 +18,7 @@ from tqdm import tqdm
 from data_loader import get_data_loaders
 from model import get_model
 
+
 def train_model(model, train_loader, val_loader, criterion, optimizer, scheduler,
                 num_epochs=25, device='cuda', save_dir='./models'):
     """
@@ -26,19 +27,19 @@ def train_model(model, train_loader, val_loader, criterion, optimizer, scheduler
     Args:
         model (nn.Module): The neural network model
         train_loader (DataLoader): DataLoader for training data
-        val_loader (DataLoader): DataLoader for validation data
+        val_loader (DataLoader): DataLoader for a validation data
         criterion (nn.Module): Loss function
         optimizer (optim.Optimizer): Optimization algorithm
         scheduler: Learning rate scheduler
         num_epochs (int): Number of epochs to train
-        device (str): Device to train on ('cuda' or 'cpu')
+        a device (str): Device to train on ('cuda' or 'cpu')
         save_dir (str): Directory to save model checkpoints
 
     Returns:
         model (nn.Module): The trained model
         history (dict): Training history
     """
-    # Create directory for saving models if it doesn't exist
+    # Create a directory for saving models if it doesn't exist
     os.makedirs(save_dir, exist_ok=True)
 
     # Initialize history dictionary to store metrics
@@ -49,7 +50,7 @@ def train_model(model, train_loader, val_loader, criterion, optimizer, scheduler
         'val_acc': []
     }
 
-    # Initialize best validation accuracy for model saving
+    # Initialize the best validation accuracy for model saving
     best_val_acc = 0.0
 
     # Start training timer
@@ -57,15 +58,15 @@ def train_model(model, train_loader, val_loader, criterion, optimizer, scheduler
 
     # Training loop
     for epoch in range(num_epochs):
-        print(f'Epoch {epoch+1}/{num_epochs}')
+        print(f'Epoch {epoch + 1}/{num_epochs}')
         print('-' * 10)
 
         # Training phase
-        model.train()  # Set model to training mode
+        model.train()  # Set the model to training mode
         running_loss = 0.0
         running_corrects = 0
 
-        # Wrap train_loader with tqdm for progress bar
+        # Wrap train_loader with tqdm for the progress bar
         train_loader_tqdm = tqdm(train_loader, desc=f'Training')
 
         # Iterate over training data
@@ -100,11 +101,11 @@ def train_model(model, train_loader, val_loader, criterion, optimizer, scheduler
         print(f'Train Loss: {epoch_train_loss:.4f} Acc: {epoch_train_acc:.4f}')
 
         # Validation phase
-        model.eval()  # Set model to evaluation mode
+        model.eval()  # Set the model to evaluation mode
         running_loss = 0.0
         running_corrects = 0
 
-        # Wrap val_loader with tqdm for progress bar
+        # Wrap val_loader with tqdm for the progress bar
         val_loader_tqdm = tqdm(val_loader, desc=f'Validation')
 
         # Iterate over validation data
@@ -152,7 +153,7 @@ def train_model(model, train_loader, val_loader, criterion, optimizer, scheduler
         history['train_acc'].append(epoch_train_acc.item())
         history['val_acc'].append(epoch_val_acc.item())
 
-        # Save checkpoint every 5 epochs
+        # Save a checkpoint every 5 epochs
         if (epoch + 1) % 5 == 0:
             torch.save({
                 'epoch': epoch,
@@ -160,7 +161,7 @@ def train_model(model, train_loader, val_loader, criterion, optimizer, scheduler
                 'optimizer_state_dict': optimizer.state_dict(),
                 'val_acc': epoch_val_acc,
                 'val_loss': epoch_val_loss,
-            }, os.path.join(save_dir, f'checkpoint_epoch_{epoch+1}.pth'))
+            }, os.path.join(save_dir, f'checkpoint_epoch_{epoch + 1}.pth'))
 
     # Calculate total training time
     time_elapsed = time.time() - start_time
@@ -176,6 +177,7 @@ def train_model(model, train_loader, val_loader, criterion, optimizer, scheduler
 
     return model, history
 
+
 def plot_training_history(history, save_dir):
     """
     Plot training and validation loss and accuracy.
@@ -184,7 +186,7 @@ def plot_training_history(history, save_dir):
         history (dict): Training history
         save_dir (str): Directory to save plots
     """
-    # Create figure with two subplots
+    # Create a figure with two subplots
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 5))
 
     # Plot loss
@@ -209,6 +211,7 @@ def plot_training_history(history, save_dir):
     plt.tight_layout()
     plt.savefig(os.path.join(save_dir, 'training_history.png'))
     plt.close()
+
 
 def main():
     """Main function to train the model."""
@@ -252,6 +255,7 @@ def main():
     )
 
     print('Training completed successfully!')
+
 
 if __name__ == '__main__':
     main()
